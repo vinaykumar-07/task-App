@@ -109,15 +109,14 @@ class _CodingScreenState extends State<CodingScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: const Color(0xFF012B5B),
+        automaticallyImplyLeading: false,
+        centerTitle: true,
+        leading: IconButton(
+          icon: const Icon(Icons.menu),
+          onPressed: () {},
+        ),
         title: const Text('Coding Test App'),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.menu),
-            onPressed: () {
-              // Handle menu icon press
-            },
-          ),
-        ],
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
@@ -132,28 +131,78 @@ class _CodingScreenState extends State<CodingScreen> {
               ),
             ),
             const SizedBox(height: 10.0),
-            SizedBox(
+            const SizedBox(
               width: 200,
-              child: const Text(
-                "The Hello World Program in C++ is the basic program that is used to demonstrate how the coding process works. All you have to do is display the message “Hello World” on the console screen.",
+              child: Text(
+                textAlign: TextAlign.justify,
+                'Write a progarm using C++ to add two number ',
                 style: TextStyle(fontSize: 16.0),
               ),
             ),
             const SizedBox(height: 10.0),
             const Text(
-              'Example Input/Output:',
+              'Example :',
               style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
             ),
-            const Text(
-              'Input: \nOutput:  Hello World .',
-              style: TextStyle(fontSize: 16.0),
+            Container(
+              padding: const EdgeInsets.all(6),
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  color: const Color(0xFF7E7F81)),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  RichText(
+                    text: const TextSpan(
+                      children: [
+                        TextSpan(
+                          text: 'Input :',
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black,
+                              fontSize: 15),
+                        ),
+                        TextSpan(
+                          text: ' 12',
+                          style: TextStyle(color: Colors.black, fontSize: 15),
+                        ),
+                        TextSpan(
+                          text: ' , 15',
+                          style: TextStyle(color: Colors.black, fontSize: 15),
+                        ),
+                      ],
+                    ),
+                  ),
+                  RichText(
+                      text: const TextSpan(children: [
+                    TextSpan(
+                        text: 'Output :',
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black,
+                            fontSize: 15)),
+                    TextSpan(
+                      text: ' 27',
+                      style: TextStyle(color: Colors.black, fontSize: 15),
+                    ),
+                  ])),
+                  const SizedBox(height: 10.0),
+                  const Text('Explanation '),
+                  const Text('if num1 and num2 is 12 and 15 respectively '),
+                  const Text('sum=num1+num2'),
+                  const Text('sum=12+15'),
+                  const Text('sum=27'),
+                  const SizedBox(height: 10.0),
+                  const Text(
+                    'Constraints:  ',
+                    style:
+                        TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
+                  ),
+                  Text('the value of sum <10^9')
+                ],
+              ),
             ),
-            const SizedBox(height: 10.0),
-            const Text(
-              'Constraints:  ',
-              style: TextStyle(fontSize: 16.0),
-            ),
-            const SizedBox(height: 20.0),
+            const SizedBox(height: 10),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
@@ -168,6 +217,7 @@ class _CodingScreenState extends State<CodingScreen> {
                   width: 12,
                 ),
                 DropdownButton<String>(
+                  style: const TextStyle(color: Colors.black),
                   value: _isDarkMode ? 'Dark Mode' : 'Light Mode',
                   onChanged: (String? newValue) {
                     setState(() {
@@ -215,16 +265,22 @@ class _CodingScreenState extends State<CodingScreen> {
                   border: InputBorder.none,
                   hintText: '''
 #include <iostream>
-  using namespace std;
-  
-  // Main() function: where the execution of
-  // program begins
-  int main()
-  {
-      // Prints hello world
-      cout << "Hello World";
-  
-      return 0;
+using namespace std;
+
+int main() {
+
+  int num1, num2, sum;
+    
+  cout << "Enter two integers: ";
+  cin >> first_number >> second_number;
+
+  // sum of two numbers in stored in variable sumOfTwoNumbers
+  sum = first_number + second_number;
+
+  // prints sum 
+  cout << first_number << " + " <<  second_number << " = " << sum;     
+
+  return 0;
 }
 ''',
                   hintStyle: TextStyle(
@@ -236,10 +292,34 @@ class _CodingScreenState extends State<CodingScreen> {
               ),
             ),
             const SizedBox(height: 20.0),
+            const Text(
+              'Custom Input',
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+            ),
+            SizedBox(
+              height: 100,
+              width: 200,
+              child: Container(
+                decoration: BoxDecoration(
+                    shape: BoxShape.rectangle,
+                    borderRadius: BorderRadius.circular(10),
+                    color: Colors.grey[300]),
+                child: const TextField(
+                  maxLines: 3,
+                  decoration: InputDecoration(
+                    hintText: ' 12\n 15',
+                    border: InputBorder.none,
+                  ),
+                ),
+              ),
+            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color(0xFF012B5B),
+                  ),
                   onPressed: _runisLoading ? null : _run,
                   child: _runisLoading
                       ? const CircularProgressIndicator()
@@ -252,6 +332,9 @@ class _CodingScreenState extends State<CodingScreen> {
                         ),
                 ),
                 ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color(0xFF012B5B),
+                  ),
                   onPressed: _isLoading ? null : _submit,
                   child: _isLoading
                       ? const CircularProgressIndicator()
