@@ -24,7 +24,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
         userCredential = await FirebaseAuth.instance
             .createUserWithEmailAndPassword(email: email, password: password)
             .then((value) => Navigator.push(context,
-                MaterialPageRoute(builder: (context) => const LoginScreen())));
+                MaterialPageRoute(builder: (context) => const CodingScreen())));
       } on FirebaseAuthException catch (e) {
         return UiHelper.customAlertDilog(e.code.toString(), context);
       }
@@ -68,7 +68,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       recognizer: TapGestureRecognizer()
                         ..onTap =
                             () => (Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (context) => const CodingScreen(),
+                                  builder: (context) => const LoginScreen(),
                                 ))),
                       text: "Log In",
                       style: TextStyle(
