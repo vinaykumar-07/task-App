@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class CodingScreen extends StatefulWidget {
@@ -70,7 +71,7 @@ class _CodingScreenState extends State<CodingScreen> {
       builder: (BuildContext context) {
         return AlertDialog(
           title: const Text("Code Run sucessfully"),
-          content: const Text("Hello World ."),
+          content: const Text("Sum is 27 ."),
           actions: [
             TextButton(
               onPressed: () {
@@ -110,13 +111,150 @@ class _CodingScreenState extends State<CodingScreen> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: const Color(0xFF012B5B),
-        automaticallyImplyLeading: false,
+        // automaticallyImplyLeading: false,
         centerTitle: true,
-        leading: IconButton(
-          icon: const Icon(Icons.menu),
-          onPressed: () {},
-        ),
         title: const Text('Coding Test App'),
+      ),
+      // added drawer for user details and logout implementation
+      drawer: Drawer(
+        child: Container(
+          width:
+              MediaQuery.of(context).size.width * 0.35, // 35% of screen width
+          color: Colors.white,
+          child: ListView(
+            children: [
+              DrawerHeader(
+                  decoration: const BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                      colors: [
+                        Colors.blue,
+                        Colors.blueAccent,
+                      ],
+                    ),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 20.0),
+                    child: Stack(fit: StackFit.loose, children: <Widget>[
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Container(
+                              width: 140.0,
+                              height: 140.0,
+                              decoration: const BoxDecoration(
+                                color: Color(0xFF1976D2),
+                                shape: BoxShape.circle,
+                                image: DecorationImage(
+                                  image:
+                                      ExactAssetImage('assets/images/as.png'),
+                                  fit: BoxFit.cover,
+                                ),
+                              )),
+                        ],
+                      ),
+                      const Padding(
+                          padding: EdgeInsets.only(top: 90.0, right: 100.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              CircleAvatar(
+                                backgroundColor: Color(0xFF1976D2),
+                                radius: 25.0,
+                                child: Icon(
+                                  Icons.camera_alt,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ],
+                          )),
+                    ]),
+                  )),
+              ListTile(
+                leading: const Icon(
+                  Icons.person,
+                  size: 30,
+                ),
+                title: const Text(
+                  'Profile',
+                  style: TextStyle(
+                    fontSize: 20,
+                    color: Color(0xFF1976D2),
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                onTap: () {
+                  //Navigator.push(context, MaterialPageRoute(builder: (context)=>AboutUsPage()));
+                  // Add your logic here to navigate to the home page
+                },
+              ),
+              ListTile(
+                leading: const Icon(
+                  Icons.contact_page,
+                  size: 30,
+                ),
+                title: const Text(
+                  'Contect us',
+                  style: TextStyle(
+                    fontSize: 20,
+                    color: Color(0xFF1976D2),
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                onTap: () {
+                  // navProvider.navigate('/contectUs');
+
+                  // Add your logic here to navigate to the home page
+                },
+              ),
+              ListTile(
+                leading: const Icon(
+                  Icons.settings,
+                  size: 30,
+                ),
+                title: const Text(
+                  'Setting',
+                  style: TextStyle(
+                    fontSize: 20,
+                    color: Color(0xFF1976D2),
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                onTap: () {
+                  // Add your logic here to navigate to the home page
+                },
+              ),
+              ListTile(
+                leading: const Icon(Icons.logout),
+                title: const Text(
+                  'SignOut',
+                  style: TextStyle(
+                    fontSize: 20,
+                    color: Color(0xFF1976D2),
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                onTap: () {
+                  //auth.logout();
+                  FirebaseAuth.instance.signOut();
+                  Navigator.pop(context);
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      dismissDirection: DismissDirection.up,
+                      behavior: SnackBarBehavior.floating,
+                      content: Text('logout sucessful'),
+                      duration:
+                          Duration(seconds: 2), // Adjust duration as needed
+                    ),
+                  );
+                  // Add your logic here to navigate to the home page
+                },
+              ),
+            ],
+          ),
+        ),
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
@@ -144,11 +282,12 @@ class _CodingScreenState extends State<CodingScreen> {
               'Example :',
               style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
             ),
+            const SizedBox(height: 10.0),
             Container(
-              padding: const EdgeInsets.all(6),
+              padding: const EdgeInsets.all(8),
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
-                  color: const Color(0xFF7E7F81)),
+                  color: const Color.fromARGB(255, 201, 203, 205)),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -187,7 +326,13 @@ class _CodingScreenState extends State<CodingScreen> {
                     ),
                   ])),
                   const SizedBox(height: 10.0),
-                  const Text('Explanation '),
+                  const Text(
+                    'Explanation :',
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 15),
+                  ),
                   const Text('if num1 and num2 is 12 and 15 respectively '),
                   const Text('sum=num1+num2'),
                   const Text('sum=12+15'),
@@ -198,7 +343,7 @@ class _CodingScreenState extends State<CodingScreen> {
                     style:
                         TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
                   ),
-                  Text('the value of sum <10^9')
+                  const Text('the value of sum <10^9')
                 ],
               ),
             ),
@@ -270,16 +415,12 @@ using namespace std;
 int main() {
 
   int num1, num2, sum;
-    
   cout << "Enter two integers: ";
-  cin >> first_number >> second_number;
-
-  // sum of two numbers in stored in variable sumOfTwoNumbers
-  sum = first_number + second_number;
-
+  cin >> num1 >> num2;
+  // sum of two numbers in stored in variable sum
+  sum = num1 + num2;
   // prints sum 
-  cout << first_number << " + " <<  second_number << " = " << sum;     
-
+  cout << num1 << " + " <<  num2 << " = " << sum;     
   return 0;
 }
 ''',

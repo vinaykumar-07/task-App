@@ -1,0 +1,68 @@
+{
+  "project_info": {
+    "project_number": "491986283499",
+    "project_id": "expanse-app-df481",
+    "storage_bucket": "expanse-app-df481.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:491986283499:android:498ad7362ce1c2b78487ae",
+        "android_client_info": {
+          "package_name": "com.example.cipherschools"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "491986283499-p3d86t8gajphnh6pv8hod0peta7r4329.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD6DHUejDZ3QmtjCuDdxsguVM2oNgAbDCc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "491986283499-p3d86t8gajphnh6pv8hod0peta7r4329.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:491986283499:android:ad05139b1be099278487ae",
+        "android_client_info": {
+          "package_name": "com.example.coding_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "491986283499-p3d86t8gajphnh6pv8hod0peta7r4329.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD6DHUejDZ3QmtjCuDdxsguVM2oNgAbDCc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "491986283499-p3d86t8gajphnh6pv8hod0peta7r4329.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
