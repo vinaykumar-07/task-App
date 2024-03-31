@@ -1,4 +1,5 @@
-import 'package:coding_app/EmailAuthentaction/login.dart';
+
+import 'package:coding_app/EmailAuthentaction/signup.dart';
 import 'package:coding_app/coding_screen.dart';
 import 'package:coding_app/firebase_options.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -27,7 +28,7 @@ class MyApp extends StatelessWidget {
           visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
         home: FirebaseAuth.instance.currentUser == null
-            ? const LoginScreen()
+            ? const SignUpScreen()
             : const CodingScreen());
   }
 }

@@ -1,5 +1,4 @@
-
-import 'package:coding_app/EmailAuthentaction/forgetpassword.dart';
+import 'package:coding_app/EmailAuthentaction/forgot_password.dart';
 import 'package:coding_app/EmailAuthentaction/signup.dart';
 import 'package:coding_app/coding_screen.dart';
 import 'package:coding_app/widgets/uihelper.dart';
@@ -18,20 +17,36 @@ class _LoginScreenState extends State<LoginScreen> {
   TextEditingController passwordController = TextEditingController();
 
 // this function check that users details on firebase database
-  SignIn(String email, String password) async {
-    if (email == "" && password == "") {
-      return UiHelper.customAlertDilog('enter the reqired details', context);
-    } else {
-      UserCredential? userCredential;
-      try {
-        userCredential = await FirebaseAuth.instance
-            .signInWithEmailAndPassword(email: email, password: password)
-            .then((value) => Navigator.push(context,
-                MaterialPageRoute(builder: (context) => const CodingScreen())));
-      } on FirebaseAuthException catch (e) {
-        return UiHelper.customAlertDilog(e.code.toString(), context);
-      }
-      print(userCredential);
+
+  bool isLoading = false;
+
+// Modify SignIn method to handle loading state
+  Future<void> signIn(String email, String password) async {
+    if (email.isEmpty || password.isEmpty) {
+      UiHelper.customAlertDilog('Enter the required details', context);
+      return;
+    }
+
+    setState(() {
+      isLoading = true;
+    });
+
+    try {
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+      // Navigate to the next screen
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => const CodingScreen()),
+      );
+    } on FirebaseAuthException catch (e) {
+      UiHelper.customAlertDilog(e.code.toString(), context);
+    } finally {
+      setState(() {
+        isLoading = false;
+      });
     }
   }
 
@@ -39,7 +54,8 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Login page"),
+        automaticallyImplyLeading: false,
+        title: const Text("Sign In "),
         centerTitle: true,
         backgroundColor: Color(0xFF012B5B),
       ),
@@ -48,11 +64,12 @@ class _LoginScreenState extends State<LoginScreen> {
             "Enter your Email here", false),
         UiHelper.customTextField(passwordController, Icons.key_outlined,
             "Enter your password here", true),
+        const SizedBox(height: 30),
         RichText(
           text: TextSpan(
-              text: "Don\'t have an account?",
+              text: "Don\'t have an Account?",
               style: TextStyle(
-                color: Colors.grey[500],
+                color: Colors.black87,
               ),
               children: [
                 TextSpan(
@@ -61,25 +78,50 @@ class _LoginScreenState extends State<LoginScreen> {
                         () => (Navigator.of(context).push(MaterialPageRoute(
                               builder: (context) => const SignUpScreen(),
                             ))),
-                  text: "Create",
-                  style: const TextStyle(),
+                  text: " SignUp",
+                  style: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: Color(0xFF012B5B),
+                  ),
                 ),
               ]),
         ),
-        const SizedBox(height: 30),
-        UiHelper.customElevatedButton(() {
-          SignIn(emailController.text.toString(),
-              passwordController.text.toString());
-        }, "Login Here.."),
         const SizedBox(height: 20),
-        TextButton(
-            onPressed: () {
-              Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => const ForgetPassword()));
-            },
-            child: const Text(
-              "Forget password",
-            ))
+        Padding(
+          padding: const EdgeInsets.only(left: 25, right: 25),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              TextButton(
+                  onPressed: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => const ForgotPassword()));
+                  },
+                  child: const Text(
+                    "Forgot Password",
+                    style:
+                        const TextStyle(color: Color(0xFF012B5B), fontSize: 18),
+                  )),
+              isLoading
+                  ? SizedBox(
+                      height: 20,
+                      width: 20,
+                      child: Center(
+                        child: CircularProgressIndicator(),
+                      ),
+                    )
+                  : UiHelper.customElevatedButton(
+                      () {
+                        signIn(
+                          emailController.text.toString(),
+                          passwordController.text.toString(),
+                        );
+                      },
+                      "SignIn ",
+                    ),
+            ],
+          ),
+        ),
       ]),
     );
   }

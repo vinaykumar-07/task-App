@@ -1,3 +1,4 @@
+import 'package:coding_app/EmailAuthentaction/login.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -70,7 +71,7 @@ class _CodingScreenState extends State<CodingScreen> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text("Code Run sucessfully"),
+          title: const Text("Code Run Sucessfully"),
           content: const Text("Sum is 27 ."),
           actions: [
             TextButton(
@@ -129,8 +130,8 @@ class _CodingScreenState extends State<CodingScreen> {
                       begin: Alignment.topCenter,
                       end: Alignment.bottomCenter,
                       colors: [
-                        Colors.blue,
-                        Colors.blueAccent,
+                        Color(0xFF012B5B),
+                        Color(0xFF04356D),
                       ],
                     ),
                   ),
@@ -145,7 +146,7 @@ class _CodingScreenState extends State<CodingScreen> {
                               width: 140.0,
                               height: 140.0,
                               decoration: const BoxDecoration(
-                                color: Color(0xFF1976D2),
+                                color: Color(0xFF012B5B),
                                 shape: BoxShape.circle,
                                 image: DecorationImage(
                                   image:
@@ -161,7 +162,7 @@ class _CodingScreenState extends State<CodingScreen> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: <Widget>[
                               CircleAvatar(
-                                backgroundColor: Color(0xFF1976D2),
+                                backgroundColor: Color(0xFF012B5B),
                                 radius: 25.0,
                                 child: Icon(
                                   Icons.camera_alt,
@@ -181,14 +182,11 @@ class _CodingScreenState extends State<CodingScreen> {
                   'Profile',
                   style: TextStyle(
                     fontSize: 20,
-                    color: Color(0xFF1976D2),
+                    color: Color(0xFF012B5B),
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                onTap: () {
-                  //Navigator.push(context, MaterialPageRoute(builder: (context)=>AboutUsPage()));
-                  // Add your logic here to navigate to the home page
-                },
+                onTap: () {},
               ),
               ListTile(
                 leading: const Icon(
@@ -196,18 +194,14 @@ class _CodingScreenState extends State<CodingScreen> {
                   size: 30,
                 ),
                 title: const Text(
-                  'Contect us',
+                  'Contact Us',
                   style: TextStyle(
                     fontSize: 20,
-                    color: Color(0xFF1976D2),
+                    color: Color(0xFF012B5B),
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                onTap: () {
-                  // navProvider.navigate('/contectUs');
-
-                  // Add your logic here to navigate to the home page
-                },
+                onTap: () {},
               ),
               ListTile(
                 leading: const Icon(
@@ -218,7 +212,7 @@ class _CodingScreenState extends State<CodingScreen> {
                   'Setting',
                   style: TextStyle(
                     fontSize: 20,
-                    color: Color(0xFF1976D2),
+                    color: Color(0xFF012B5B),
                     fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -232,19 +226,24 @@ class _CodingScreenState extends State<CodingScreen> {
                   'SignOut',
                   style: TextStyle(
                     fontSize: 20,
-                    color: Color(0xFF1976D2),
+                    color: Color(0xFF012B5B),
                     fontWeight: FontWeight.bold,
                   ),
                 ),
                 onTap: () {
                   //auth.logout();
                   FirebaseAuth.instance.signOut();
-                  Navigator.pop(context);
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => LoginScreen(),
+                      ));
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(
+                      backgroundColor: Colors.green,
                       dismissDirection: DismissDirection.up,
                       behavior: SnackBarBehavior.floating,
-                      content: Text('logout sucessful'),
+                      content: Text('Logout Sucessfull'),
                       duration:
                           Duration(seconds: 2), // Adjust duration as needed
                     ),
@@ -273,7 +272,7 @@ class _CodingScreenState extends State<CodingScreen> {
               width: 200,
               child: Text(
                 textAlign: TextAlign.justify,
-                'Write a progarm using C++ to add two number ',
+                'Write a program to add two numbers and output the sum. ',
                 style: TextStyle(fontSize: 16.0),
               ),
             ),
@@ -287,7 +286,7 @@ class _CodingScreenState extends State<CodingScreen> {
               padding: const EdgeInsets.all(8),
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
-                  color: const Color.fromARGB(255, 201, 203, 205)),
+                  color: Colors.grey[300]),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -333,17 +332,17 @@ class _CodingScreenState extends State<CodingScreen> {
                         fontWeight: FontWeight.bold,
                         fontSize: 15),
                   ),
-                  const Text('if num1 and num2 is 12 and 15 respectively '),
-                  const Text('sum=num1+num2'),
-                  const Text('sum=12+15'),
-                  const Text('sum=27'),
+                  const Text('If num1 and num2 is 12 and 15 respectively '),
+                  const Text('sum = num1 + num2'),
+                  const Text('sum = 12 + 15'),
+                  const Text('sum = 27'),
                   const SizedBox(height: 10.0),
                   const Text(
                     'Constraints:  ',
                     style:
                         TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
                   ),
-                  const Text('the value of sum <10^9')
+                  const Text(' 0 ≤ num1 , num2 ≤ 10000')
                 ],
               ),
             ),
@@ -361,6 +360,7 @@ class _CodingScreenState extends State<CodingScreen> {
                 const SizedBox(
                   width: 12,
                 ),
+                //dropdown button for selection theme
                 DropdownButton<String>(
                   style: const TextStyle(color: Colors.black),
                   value: _isDarkMode ? 'Dark Mode' : 'Light Mode',
@@ -380,6 +380,7 @@ class _CodingScreenState extends State<CodingScreen> {
                 const SizedBox(
                   width: 12,
                 ),
+                //dropdown button for selecting language
                 DropdownButton<String>(
                   value: _selectedLanguage,
                   onChanged: (String? newValue) {
@@ -438,6 +439,9 @@ int main() {
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
             ),
             SizedBox(
+              height: 10,
+            ),
+            SizedBox(
               height: 100,
               width: 200,
               child: Container(
@@ -454,6 +458,9 @@ int main() {
                 ),
               ),
             ),
+            SizedBox(
+              height: 10,
+            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -463,7 +470,10 @@ int main() {
                   ),
                   onPressed: _runisLoading ? null : _run,
                   child: _runisLoading
-                      ? const CircularProgressIndicator()
+                      ? SizedBox(
+                          height: 20,
+                          width: 20,
+                          child: const CircularProgressIndicator())
                       : const Text(
                           'Run',
                           style: TextStyle(
@@ -478,7 +488,10 @@ int main() {
                   ),
                   onPressed: _isLoading ? null : _submit,
                   child: _isLoading
-                      ? const CircularProgressIndicator()
+                      ? SizedBox(
+                          height: 20,
+                          width: 20,
+                          child: const CircularProgressIndicator())
                       : const Text(
                           'Submit',
                           style: TextStyle(

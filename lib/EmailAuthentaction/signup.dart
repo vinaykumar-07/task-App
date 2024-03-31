@@ -1,6 +1,4 @@
-
-import 'package:coding_app/EmailAuthentaction/login.dart';
-import 'package:coding_app/coding_screen.dart';
+import 'package:coding_app/EmailAuthentaction/login.dart'; 
 import 'package:coding_app/widgets/uihelper.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
@@ -18,14 +16,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   SignUp(String email, String password) async {
     if (email == "" && password == "") {
-      return UiHelper.customAlertDilog('enter the reqired details', context);
+      return UiHelper.customAlertDilog('Enter the reqired details', context);
     } else {
       UserCredential? userCredential;
       try {
         userCredential = await FirebaseAuth.instance
             .createUserWithEmailAndPassword(email: email, password: password)
-            .then((value) => Navigator.push(
-                context, MaterialPageRoute(builder: (context) =>const CodingScreen())));
+            .then((value) => Navigator.push(context,
+                MaterialPageRoute(builder: (context) => const LoginScreen())));
       } on FirebaseAuthException catch (e) {
         return UiHelper.customAlertDilog(e.code.toString(), context);
       }
@@ -36,9 +34,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Signup page"),
+        automaticallyImplyLeading: false,
+        title: const Text("Sign Up"),
         centerTitle: true,
-         backgroundColor: const Color(0xFF012B5B),
+        backgroundColor: const Color(0xFF012B5B),
       ),
       body: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
         UiHelper.customTextField(emailController, Icons.mail_outline_outlined,
@@ -48,27 +47,27 @@ class _SignUpScreenState extends State<SignUpScreen> {
         const SizedBox(height: 30),
         RichText(
           text: TextSpan(
-              text: "already have an account? ",
+              text: "Already have an Account? ",
               style: TextStyle(
-                color: Colors.grey[500],
+                color: Colors.black87,
               ),
               children: [
                 TextSpan(
-                  recognizer: TapGestureRecognizer()
-                    ..onTap =
-                        () => (Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) =>const LoginScreen(),
-                            ))),
-                  text: "login",
-                 
-                ),
+                    recognizer: TapGestureRecognizer()
+                      ..onTap =
+                          () => (Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) => const LoginScreen(),
+                              ))),
+                    text: "SignIn",
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold, color: Color(0xFF012B5B))),
               ]),
         ),
-       const SizedBox(height: 20),
+        const SizedBox(height: 20),
         UiHelper.customElevatedButton(() {
           SignUp(emailController.text.toString(),
               passwordController.text.toString());
-        }, "Sign Up")
+        }, "SignUp")
       ]),
     );
   }

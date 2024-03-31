@@ -4,7 +4,7 @@ class UiHelper {
   static customTextField(TextEditingController controller, IconData prefixicon,
       String text, bool toHide) {
     return Padding(
-      padding: const EdgeInsets.all(10.0),
+      padding: const EdgeInsets.only(left: 30, right: 30, top: 10),
       child: TextField(
         controller: controller,
         obscureText: toHide,
