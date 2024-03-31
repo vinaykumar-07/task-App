@@ -1,5 +1,5 @@
 
-import 'package:coding_app/EmailAuthentaction/signup.dart';
+import 'package:coding_app/EmailAuthentaction/sign_Up.dart';
 import 'package:coding_app/coding_screen.dart';
 import 'package:coding_app/firebase_options.dart';
 import 'package:firebase_auth/firebase_auth.dart';

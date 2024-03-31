@@ -1,4 +1,4 @@
-import 'package:coding_app/EmailAuthentaction/login.dart';
+import 'package:coding_app/EmailAuthentaction/sign_In.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -107,6 +107,46 @@ class _CodingScreenState extends State<CodingScreen> {
     );
   }
 
+  void _logout() {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text('Are you sure you want to log out? '),
+          content: Text('Coding screen will close when you log out'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text("Cancel"),
+            ),
+            TextButton(
+                onPressed: () {
+                  FirebaseAuth.instance.signOut();
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => LoginScreen(),
+                      ));
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      backgroundColor: Colors.green,
+                      dismissDirection: DismissDirection.up,
+                      behavior: SnackBarBehavior.floating,
+                      content: Text('Logout Sucessfully'),
+                      duration:
+                          Duration(seconds: 3), // Adjust duration as needed
+                    ),
+                  );
+                },
+                child: Text('OK'))
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -209,7 +249,7 @@ class _CodingScreenState extends State<CodingScreen> {
                   size: 30,
                 ),
                 title: const Text(
-                  'Setting',
+                  'Settings',
                   style: TextStyle(
                     fontSize: 20,
                     color: Color(0xFF012B5B),
@@ -221,7 +261,11 @@ class _CodingScreenState extends State<CodingScreen> {
                 },
               ),
               ListTile(
-                leading: const Icon(Icons.logout),
+                leading: const Icon(
+                  Icons.power_settings_new_sharp,
+                  size: 30,
+                  color: Colors.black54,
+                ),
                 title: const Text(
                   'SignOut',
                   style: TextStyle(
@@ -232,23 +276,7 @@ class _CodingScreenState extends State<CodingScreen> {
                 ),
                 onTap: () {
                   //auth.logout();
-                  FirebaseAuth.instance.signOut();
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => LoginScreen(),
-                      ));
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      backgroundColor: Colors.green,
-                      dismissDirection: DismissDirection.up,
-                      behavior: SnackBarBehavior.floating,
-                      content: Text('Logout Sucessfull'),
-                      duration:
-                          Duration(seconds: 2), // Adjust duration as needed
-                    ),
-                  );
-                  // Add your logic here to navigate to the home page
+                  _logout();
                 },
               ),
             ],
@@ -311,6 +339,9 @@ class _CodingScreenState extends State<CodingScreen> {
                       ],
                     ),
                   ),
+                  SizedBox(
+                    height: 8,
+                  ),
                   RichText(
                       text: const TextSpan(children: [
                     TextSpan(
@@ -324,7 +355,7 @@ class _CodingScreenState extends State<CodingScreen> {
                       style: TextStyle(color: Colors.black, fontSize: 15),
                     ),
                   ])),
-                  const SizedBox(height: 10.0),
+                  const SizedBox(height: 8),
                   const Text(
                     'Explanation :',
                     style: TextStyle(
@@ -332,9 +363,21 @@ class _CodingScreenState extends State<CodingScreen> {
                         fontWeight: FontWeight.bold,
                         fontSize: 15),
                   ),
+                  SizedBox(
+                    height: 8,
+                  ),
                   const Text('If num1 and num2 is 12 and 15 respectively '),
+                  SizedBox(
+                    height: 4,
+                  ),
                   const Text('sum = num1 + num2'),
+                  SizedBox(
+                    height: 4,
+                  ),
                   const Text('sum = 12 + 15'),
+                  SizedBox(
+                    height: 4,
+                  ),
                   const Text('sum = 27'),
                   const SizedBox(height: 10.0),
                   const Text(
@@ -342,60 +385,66 @@ class _CodingScreenState extends State<CodingScreen> {
                     style:
                         TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
                   ),
+                  SizedBox(
+                    height: 4,
+                  ),
                   const Text(' 0 ≤ num1 , num2 ≤ 10000')
                 ],
               ),
             ),
             const SizedBox(height: 10),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                const Text(
-                  'Code Editor',
-                  style: TextStyle(
-                    fontSize: 20.0,
-                    fontWeight: FontWeight.bold,
+            Padding(
+              padding: const EdgeInsets.only(right: 25),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  const Text(
+                    'Code Editor',
+                    style: TextStyle(
+                      fontSize: 20.0,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
-                ),
-                const SizedBox(
-                  width: 12,
-                ),
-                //dropdown button for selection theme
-                DropdownButton<String>(
-                  style: const TextStyle(color: Colors.black),
-                  value: _isDarkMode ? 'Dark Mode' : 'Light Mode',
-                  onChanged: (String? newValue) {
-                    setState(() {
-                      _isDarkMode = newValue == 'Dark Mode';
-                    });
-                  },
-                  items: <String>['Dark Mode', 'Light Mode']
-                      .map<DropdownMenuItem<String>>((String value) {
-                    return DropdownMenuItem<String>(
-                      value: value,
-                      child: Text(value),
-                    );
-                  }).toList(),
-                ),
-                const SizedBox(
-                  width: 12,
-                ),
-                //dropdown button for selecting language
-                DropdownButton<String>(
-                  value: _selectedLanguage,
-                  onChanged: (String? newValue) {
-                    setState(() {
-                      _selectedLanguage = newValue!;
-                    });
-                  },
-                  items: _selectlanguage.map((String value) {
-                    return DropdownMenuItem<String>(
-                      value: value,
-                      child: Text(value),
-                    );
-                  }).toList(),
-                ),
-              ],
+                  const SizedBox(
+                    width: 12,
+                  ),
+                  //dropdown button for selection theme
+                  DropdownButton<String>(
+                    style: const TextStyle(color: Colors.black),
+                    value: _isDarkMode ? 'Dark Mode' : 'Light Mode',
+                    onChanged: (String? newValue) {
+                      setState(() {
+                        _isDarkMode = newValue == 'Dark Mode';
+                      });
+                    },
+                    items: <String>['Dark Mode', 'Light Mode']
+                        .map<DropdownMenuItem<String>>((String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(value),
+                      );
+                    }).toList(),
+                  ),
+                  const SizedBox(
+                    width: 12,
+                  ),
+                  //dropdown button for selecting language
+                  DropdownButton<String>(
+                    value: _selectedLanguage,
+                    onChanged: (String? newValue) {
+                      setState(() {
+                        _selectedLanguage = newValue!;
+                      });
+                    },
+                    items: _selectlanguage.map((String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(value),
+                      );
+                    }).toList(),
+                  ),
+                ],
+              ),
             ),
             const SizedBox(height: 10.0),
             Container(

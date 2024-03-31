@@ -1,4 +1,4 @@
-import 'package:coding_app/EmailAuthentaction/login.dart';
+import 'package:coding_app/EmailAuthentaction/sign_In.dart';
 import 'package:coding_app/widgets/uihelper.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -57,8 +57,14 @@ class _ForgotPasswordState extends State<ForgotPassword> {
         backgroundColor: Color(0xFF012B5B),
       ),
       body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
         children: [
+          SizedBox(
+            height: 50,
+          ),
+          Icon(Icons.lock,size: 150,),
+          SizedBox(
+            height: 20,
+          ),
           UiHelper.customTextField(
             emailController,
             Icons.mail_outline_outlined,
