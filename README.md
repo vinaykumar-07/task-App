@@ -6,8 +6,7 @@ A new Flutter project.
 
 This project is a starting point for a Flutter application.
 
-### In case anyone wants to run this app they should follow the below mention steps.
-### Setting Up the Development Environment
+### Setting Up the Development Environment.
 
 1. **Install Necessary Software:**
    - Make sure you have Flutter, Android Studio, Brew, and all other necessary SDKs installed on your local system.
@@ -39,7 +38,7 @@ This project is a starting point for a Flutter application.
 * Firebase Auth
 * flutter lancher Icon
 ## Screenshots
-  ![image](https://github.com/vinaykumar-07/task-App/assets/88262239/adf8adb0-9afd-4dcf-8108-f2b3c183d389)
+ ![image](https://github.com/vinaykumar-07/task-App/assets/88262239/adf8adb0-9afd-4dcf-8108-f2b3c183d389)
   
   ![image](https://github.com/vinaykumar-07/task-App/assets/88262239/6636ba7a-8c9a-4d78-9020-bf1ea447c333)
   
